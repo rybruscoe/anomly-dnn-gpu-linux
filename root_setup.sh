@@ -54,9 +54,9 @@ Section "Device"
     Identifier     "Device0"
     Driver         "nvidia"
     VendorName     "NVIDIA Corporation"
-    BusID          "PCI:0:3:0" # THIS MAY CHANGE FROM INSTANCE TO INSTANCE,
-    						   # check the device bus by running 'lspci | grep -i nvidia'
-    						   # or lshw -C video
+    BusID          "PCI:0000:00:0b.0" # THIS MAY CHANGE FROM INSTANCE TO INSTANCE,
+    						          # check the device bus by running 'lspci | grep -i nvidia'
+    						          # or lshw -C video
 EndSection
 
 Section "Screen"
