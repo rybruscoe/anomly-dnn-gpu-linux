@@ -3,7 +3,7 @@ apt-get update
 
 apt-get install -y xorg # X display server https://en.wikipedia.org/wiki/X.Org_Server
 
-# installing and configuring nvidia DRIVERS
+# installing and configuring Nvidia GPU driver
 apt-get install build-essential -y
 curl -O http://us.download.nvidia.com/XFree86/Linux-x86_64/418.56/NVIDIA-Linux-x86_64-418.56.run
 chmod +x ./NVIDIA-Linux-x86_64-418.56.run
@@ -105,46 +105,3 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 apt-get install python-pip -y
 pip install --upgrade pip
 pip install nvidia-docker-compose
-
-# install virtualgl
-export VGL_VERSION=2.6.1
-wget http://downloads.sourceforge.net/project/virtualgl/${VGL_VERSION}/virtualgl_${VGL_VERSION}_amd64.deb
-dpkg -i virtualgl*.deb && rm virtualgl*.deb
-
-# Set VirtualLG defaults, xauth bits, this adds a DRI line to xorg.conf.
-#/opt/VirtualGL/bin/vglserver_config -config -s -f +t
-/opt/VirtualGL/bin/vglserver_config -config +s +f -t  # access open to all users, restricting users doesn't really work :\
-
-# install lightdm
-apt-get install -qqy lightdm -y
-
-# fix lightdm bug
-# https://wiki.archlinux.org/index.php/VirtualGL#Problem:_Error_messages_about_.2Fetc.2Fopt.2FVirtualGL.2Fvgl_xauth_key_not_existing
-rm /etc/lightdm/lightdm.conf
-# overriding deprecated default configuration [SeatDefaults] https://wiki.ubuntu.com/LightDM
-cat << EOF - > /etc/lightdm/lightdm.conf
-[Seat:seat0]
-display-setup-script=/usr/bin/vglgenkey
-display-setup-script=xhost +LOCAL:
-EOF
-
-apt-get install -y mesa-utils
-
-# install turbovnc
-# can be updated to 1.5.1
-export LIBJPEG_VERSION=1.4.2
-wget http://downloads.sourceforge.net/project/libjpeg-turbo/${LIBJPEG_VERSION}/libjpeg-turbo-official_${LIBJPEG_VERSION}_amd64.deb
-dpkg -i libjpeg-turbo-official*.deb && rm libjpeg-turbo-official*.deb
-# can be updated to 2.1
-export TURBOVNC_VERSION=2.0.1
-wget http://downloads.sourceforge.net/project/turbovnc/${TURBOVNC_VERSION}/turbovnc_${TURBOVNC_VERSION}_amd64.deb
-dpkg -i turbovnc*.deb && rm turbovnc*.deb
-
-# install window manager
-# installing mate as it's supported out of the box by turbovnc, see ~/.vnc/xstartup.turbovnc for more info
-apt-get install mate -y --no-install-recommends
-
-# start lightdm display manager, so far there was NO display manager!
-service lightdm start
-
-#test vgl with /opt/VirtualGL/bin/glxinfo -display :0 -c | tail
