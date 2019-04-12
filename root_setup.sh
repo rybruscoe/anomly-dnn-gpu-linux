@@ -87,7 +87,7 @@ export NVIDIADOCKER_VERSION=2.0.3
 wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v${NVIDIADOCKER_VERSION}/nvidia-docker_${NVIDIADOCKER_VERSION}-1_amd64.deb
 dpkg -i /tmp/nvidia-docker*.deb && rm /tmp/nvidia-docker*.deb -y
 # Test nvidia-smi
-nvidia-docker run --rm nvidia/cuda nvidia-smi
+# nvidia-docker run --rm nvidia/cuda nvidia-smi
 
 # Docker compose
 curl -L https://github.com/docker/compose/releases/download/1.8.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
