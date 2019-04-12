@@ -77,7 +77,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" -y
 apt update -y
 apt-cache policy docker-ce -y
-apt install docker-ce
+apt install docker-ce -y
 # 'systemctl status docker' to check the service status
 # allow docker to be used without sudo - THIS REQUIRES TO LOGOUT AND LOGIN AGAIN!!!
 usermod -aG docker anomly # assuming "anomly" is the user name
@@ -85,7 +85,7 @@ usermod -aG docker anomly # assuming "anomly" is the user name
 # Nvidia docker https://github.com/NVIDIA/nvidia-docker/wiki
 export NVIDIADOCKER_VERSION=2.0.3
 wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v${NVIDIADOCKER_VERSION}/nvidia-docker_${NVIDIADOCKER_VERSION}-1_amd64.deb
-dpkg -i /tmp/nvidia-docker*.deb && rm /tmp/nvidia-docker*.deb
+dpkg -i /tmp/nvidia-docker*.deb && rm /tmp/nvidia-docker*.deb -y
 # Test nvidia-smi
 nvidia-docker run --rm nvidia/cuda nvidia-smi
 
@@ -110,7 +110,7 @@ dpkg -i virtualgl*.deb && rm virtualgl*.deb
 /opt/VirtualGL/bin/vglserver_config -config +s +f -t  # access open to all users, restricting users doesn't really work :\
 
 # install lightdm
-apt-get install -qqy lightdm
+apt-get install -qqy lightdm -y
 
 # fix lightdm bug
 # https://wiki.archlinux.org/index.php/VirtualGL#Problem:_Error_messages_about_.2Fetc.2Fopt.2FVirtualGL.2Fvgl_xauth_key_not_existing
