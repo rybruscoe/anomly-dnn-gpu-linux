@@ -84,10 +84,16 @@ usermod -aG docker anomly # assuming "anomly" is the user name
 
 # Nvidia docker https://github.com/NVIDIA/nvidia-docker/wiki
 export NVIDIADOCKER_VERSION=2.0.3
-wget -P /tmp https://github.com/NVIDIA/nvidia-docker/releases/download/v${NVIDIADOCKER_VERSION}/nvidia-docker_${NVIDIADOCKER_VERSION}-1_amd64.deb
-dpkg -i /tmp/nvidia-docker*.deb && rm /tmp/nvidia-docker*.deb -y
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | \
+  apt-key add -
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | \
+  tee /etc/apt/sources.list.d/nvidia-docker.list
+apt-get update
+apt-get install -y nvidia-docker2
+pkill -SIGHUP dockerd
 # Test nvidia-smi
-# nvidia-docker run --rm nvidia/cuda nvidia-smi
+docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi
 
 # Docker compose
 curl -L https://github.com/docker/compose/releases/download/1.8.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
