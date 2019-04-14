@@ -80,7 +80,7 @@ apt-cache policy docker-ce -y
 apt install docker-ce -y
 # 'systemctl status docker' to check the service status
 # allow docker to be used without sudo - THIS REQUIRES TO LOGOUT AND LOGIN AGAIN!!!
-usermod -aG docker anomly # assuming "anomly" is the user name
+usermod -aG docker ubuntu # assuming "ubuntu" is the user name
 
 # Nvidia docker https://github.com/NVIDIA/nvidia-docker/wiki
 export NVIDIADOCKER_VERSION=2.0.3

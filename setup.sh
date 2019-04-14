@@ -4,19 +4,7 @@
 # 'source setup.sh'
 # to force variables to be exported in the same shell
 source ./root_setup.sh
-su anomly << 'eof'
-source ./user_setup.sh
-
-echo "scheduling startup at reboot"
-chmod +x ./startup.sh
-crontab -r
-echo "SHELL=/bin/bash" >> /tmp/usercron
-echo "DISPLAY=$DISPLAY" >> /tmp/usercron
-echo "PATH=$PATH" >> /tmp/usercron
-echo "@reboot /home/anomly/anomly-dnn-gpu-linux/startup.sh" >> /tmp/usercron
-crontab /tmp/usercron
-rm -f /tmp/usercron
-eof
+su ubuntu << 'eof'
 
 echo "cleaning setup files"
 rm ./*setup.sh
