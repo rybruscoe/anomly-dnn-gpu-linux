@@ -6,6 +6,8 @@
 source ./root_setup.sh
 su ubuntu << 'eof'
 
+eof
+
 echo "cleaning setup files"
 rm ./*setup.sh
 rm ./*.md
